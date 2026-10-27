@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #fbf9f5;
+  --surface: #ffffff;
+  --line: #e8e3d8;
+  --fg: #111827;
+  --heading: #0f172a;
+  --muted: #4b5563;
+  --accent: #15803d;
+  --accent-hover: #166534;
+  --accentfg: #ffffff;
+  --input-bg: #ebe5de;
+  --input-border: #d8d0c5;
+  --input-fg: #111827;
+  --input-placeholder: #6b7280;
+  --badge-green-bg: #e8f5e9;
+  --badge-green-fg: #15803d;
+}
+
+html.dark,
+.dark {
+  --bg: #131d15;
+  --surface: #1e2b20;
+  --line: #2e3d30;
+  --fg: #f9fafb;
+  --heading: #ffffff;
+  --muted: #9ca3af;
+  --accent: #22c55e;
+  --accent-hover: #16a34a;
+  --accentfg: #0a1f0c;
+  --input-bg: #253328;
+  --input-border: #384a3c;
+  --input-fg: #f9fafb;
+  --input-placeholder: #9ca3af;
+  --badge-green-bg: #1e2b20;
+  --badge-green-fg: #22c55e;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.011em;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Base typography ensuring high contrast and ultra-professional appearance */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.025em;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+p, li, span, label {
+  color: inherit;
+}
+
+.logo-image {
+  height: 40px;
+  width: auto;
+  max-height: 44px;
+  object-fit: contain;
+  display: block;
+}
+
+.footer-logo .logo-image {
+  height: 44px;
+  max-height: 52px;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 20px rgba(34, 197, 94, 0.4), 0 0 40px rgba(34, 197, 94, 0.2); }
+  50% { text-shadow: 0 0 30px rgba(34, 197, 94, 0.7), 0 0 60px rgba(34, 197, 94, 0.35); }
+}
+
+.glow-text {
+  animation: glow 3.5s ease-in-out infinite;
+}
+
+@keyframes bounceY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.scroll-cue {
+  animation: bounceY 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Card Spotlight Effect (Global) */
+[data-spot] {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-spot]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(76, 175, 80, 0.17), transparent 60%);
+}
+
+[data-spot]:hover::after {
+  opacity: 1;
+}
+
+/* Hero HUD Keyframes */
+@keyframes hudScanBand {
+  0% {
+    top: -15%;
+  }
+  100% {
+    top: 105%;
+  }
+}
+
+@keyframes hudBracketPulse {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.hud-scan-band {
+  animation: hudScanBand 6s linear infinite;
+}
+
+.hud-bracket-pulse {
+  animation: hudBracketPulse 2.8s ease-in-out infinite;
+}
