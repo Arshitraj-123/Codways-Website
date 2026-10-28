@@ -23,7 +23,6 @@ import Heading from './Heading.jsx'
 import ContactForm from './ContactForm.jsx'
 import { why, tailored, stories, contact } from '../data/content.js'
 
-// FX components
 import HeroHud from './fx/HeroHud.jsx'
 import DecryptText from './fx/DecryptText.jsx'
 import { useSiteReady } from './fx/ReadyContext.jsx'
@@ -34,145 +33,159 @@ export function Hero() {
   const ready = useSiteReady()
   const prefersReduced = useReducedMotion()
   const { scrollY } = useScroll()
-  const videoY = useTransform(scrollY, [0, 700], [0, 100])
+
+  const videoY = useTransform(scrollY, [0, 700], [0, 70])
 
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-bg">
-      <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
-        {/* Background Video - Fully visible, vibrant and unobstructed */}
+    <section className="relative w-full overflow-hidden bg-bg">
+      <div
+        className="relative w-full overflow-hidden"
+        style={{
+          height: 'calc(100vh - 88px)',
+          minHeight: '600px',
+        }}
+      >
+        {/* Background video */}
         <motion.div
+          className="absolute inset-0 w-full h-full overflow-hidden"
           style={{
             y: prefersReduced ? 0 : videoY,
-            scale: 1.08,
+            scale: 1.04,
           }}
-          className="w-full h-full overflow-hidden"
         >
           <video
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             src="/intro-video.mp4"
             autoPlay
             loop
             muted
             playsInline
             preload="auto"
-            style={{ backgroundColor: '#000000', opacity: 1 }}
+            style={{
+              backgroundColor: '#000000',
+              opacity: 1,
+            }}
           />
         </motion.div>
 
-        {/* Soft cinematic vignette preserving full clarity in center while ensuring contrast for header and text */}
+        {/* Dark cinematic overlay matching the reference */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 z-[1] pointer-events-none"
           style={{
             background:
-              'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.12) 30%, rgba(0,0,0,0.12) 65%, rgba(0,0,0,0.65) 100%)',
+              'linear-gradient(to bottom, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0.24) 45%, rgba(0,0,0,0.32) 78%, rgba(0,0,0,0.08) 100%)',
           }}
         />
 
-        {/* Viewfinder corner tech brackets */}
-        <div className="absolute inset-0 z-[5] pointer-events-none">
-          <HeroHud />
-        </div>
-
-        {/* Hero Central Content - Floating cleanly over video without any blocking opaque card */}
-        <div className="absolute inset-0 flex items-center justify-center z-10 px-4 pointer-events-none">
+        {/* Centered translucent glass panel */}
+        <div className="absolute inset-0 z-10 flex items-center justify-center px-5 sm:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="text-center px-4 max-w-4xl mx-auto pointer-events-auto"
+            initial={{ opacity: 0, y: 15 }}
+            animate={
+              ready
+                ? { opacity: 1, y: 0 }
+                : { opacity: 0, y: 15 }
+            }
+            transition={{
+              duration: 0.7,
+              ease: 'easeOut',
+            }}
+            className="w-full max-w-[850px] mx-auto text-center"
+            style={{
+              background: 'rgba(8, 12, 13, 0.57)',
+              backdropFilter: 'blur(3px)',
+              WebkitBackdropFilter: 'blur(9px)',
+              border: '1px solid rgba(255,255,255,0.055)',
+              borderRadius: '25px',
+              paddingTop: '30px',
+              paddingBottom: '30px',
+              paddingLeft: '1.5rem',
+              paddingRight: '1.5rem',
+              boxShadow: '0 12px 45px rgba(0,0,0,0.10)',
+            }}
           >
-            {/* Pill Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-              transition={{ delay: 0.15, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-black/40 backdrop-blur-md border border-white/20 text-white/95 mb-6 shadow-xl"
+            <h1
+              className="text-center font-extrabold text-white"
+              style={{
+                margin: 0,
+                letterSpacing: '-0.035em',
+                lineHeight: 1.08,
+                fontFamily: 'inherit',
+              }}
             >
-              <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
-              <span>Next-Generation Tech Learning</span>
-            </motion.div>
-
-            {/* Main Headline with high-contrast text shadows */}
-            <h1 className="font-extrabold leading-tight text-white tracking-tight text-center">
               <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="block text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white"
+                initial={{ opacity: 0, y: 12 }}
+                animate={
+                  ready
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 12 }
+                }
+                transition={{ delay: 0.12, duration: 0.55 }}
+                className="block font-extrabold text-white"
                 style={{
-                  textShadow: '0 4px 24px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.9)',
+                  fontSize: 'clamp(38px, 5.1vw, 82px)',
+                  lineHeight: 1.12,
+                  textShadow: '0 3px 10px rgba(0,0,0,0.25)',
                 }}
               >
                 An innovative
               </motion.span>
+
               <motion.span
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }}
-                transition={{ delay: 0.35, duration: 0.6 }}
-                className="block my-2 sm:my-3 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-[#22c55e] glow-text"
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={
+                  ready
+                    ? { opacity: 1, scale: 1 }
+                    : { opacity: 0, scale: 0.97 }
+                }
+                transition={{ delay: 0.24, duration: 0.55 }}
+                className="block font-black text-[#287f32]"
                 style={{
-                  textShadow: '0 0 35px rgba(34,197,94,0.7), 0 4px 24px rgba(0,0,0,0.95)',
+                  fontSize: 'clamp(48px, 6.2vw, 100px)',
+                  lineHeight: 1.15,
+                  marginTop: '8px',
+                  marginBottom: '8px',
+                  letterSpacing: '-0.025em',
+                  textShadow: '0 3px 12px rgba(0,0,0,0.12)',
                 }}
               >
-                <DecryptText text="Platform" />
+                Platform
               </motion.span>
+
               <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                className="block text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white"
+                initial={{ opacity: 0, y: 12 }}
+                animate={
+                  ready
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 12 }
+                }
+                transition={{ delay: 0.36, duration: 0.55 }}
+                className="block font-extrabold text-white"
                 style={{
-                  textShadow: '0 4px 24px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.9)',
+                  fontSize: 'clamp(32px, 4.9vw, 80px)',
+                  lineHeight: 1.12,
+                  letterSpacing: '-0.035em',
+                  textShadow: '0 3px 10px rgba(0,0,0,0.25)',
                 }}
               >
                 for Your Next Chapter
               </motion.span>
             </h1>
-
-            {/* Value Proposition Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.65, duration: 0.6 }}
-              className="mt-6 text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto font-medium leading-relaxed"
-              style={{
-                textShadow: '0 2px 14px rgba(0,0,0,0.95), 0 1px 4px rgba(0,0,0,0.9)',
-              }}
-            >
-              Master high-demand tech skills, build real-world products, and unlock your career potential.
-            </motion.p>
-
-            {/* Call to Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-              className="mt-8 flex flex-wrap items-center justify-center gap-4"
-            >
-              <Link
-                to="/products"
-                className="px-7 py-3.5 rounded-xl font-bold bg-[#15803d] hover:bg-[#166534] dark:bg-[#22c55e] dark:hover:bg-[#16a34a] text-white dark:text-[#0a1f0c] shadow-xl shadow-black/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 text-sm sm:text-base"
-              >
-                Explore Products
-              </Link>
-              <Link
-                to="/contact"
-                className="px-7 py-3.5 rounded-xl font-bold bg-black/40 hover:bg-black/60 backdrop-blur-md text-white border border-white/25 shadow-xl shadow-black/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 text-sm sm:text-base"
-              >
-                Contact Us
-              </Link>
-            </motion.div>
           </motion.div>
         </div>
 
-        {/* Bottom smooth fade to page bg */}
+        {/* Soft white fade at the bottom */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-20 z-20 pointer-events-none flex items-end justify-center pb-4"
+          className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, var(--bg) 100%)',
+            height: '110px',
+            background:
+              'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.20) 45%, var(--bg) 100%)',
           }}
         >
-          <ChevronDown className="scroll-cue text-accent h-7 w-7" />
+          <div className="absolute bottom-4 left-0 right-0 flex justify-center">
+            <ChevronDown className="scroll-cue text-accent h-7 w-7" />
+          </div>
         </div>
       </div>
     </section>
@@ -190,7 +203,6 @@ export function Why({ id = 'about' }) {
           sub="We're not just another online course platform. We're your career transformation partner."
         />
 
-        {/* 4 Cards Grid with data-spot for Card Spotlight */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-7 mb-24">
           {why.map((w, i) => {
             const Icon = whyIcons[i]
@@ -215,7 +227,6 @@ export function Why({ id = 'about' }) {
           })}
         </div>
 
-        {/* Solutions Built Around You */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <Reveal y={0}>
             <h3 className="text-3xl sm:text-4xl font-extrabold mb-6 text-heading tracking-tight">
@@ -242,7 +253,6 @@ export function Why({ id = 'about' }) {
                 className="w-full h-auto object-cover max-h-[460px]"
               />
             </div>
-            {/* 85% placement floating pill badge with CountUp */}
             <motion.div
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
@@ -302,7 +312,6 @@ export function Stories({ id = 'success', showButton = true }) {
                     <span className="text-xs font-semibold text-fg">{s.program}</span>
                   </div>
 
-                  {/* 5 Gold Stars */}
                   <div className="flex items-center gap-1 text-[#f59e0b] mb-4">
                     {[...Array(5)].map((_, idx) => (
                       <Star key={idx} size={15} fill="#f59e0b" strokeWidth={0} />
@@ -375,7 +384,6 @@ export function ContactSection({ id = 'contact' }) {
             ))}
           </div>
 
-          {/* Social Icons row */}
           <div className="flex items-center space-x-2.5 pt-2">
             {contactSocials.map((s, i) => {
               const Icon = s.icon
